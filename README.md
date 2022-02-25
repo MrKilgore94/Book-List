@@ -1,70 +1,146 @@
-# Getting Started with Create React App
+Basic setup FOCUS ON REACT ROUTER / REACT CONTEXT / CRUD
+1. setup react project/github
+any notes about this step you want
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+$ yarn create react-app <project-name>
+// comment here
+$ cd  <project-name>
+$ git remote add origin ssh-link
+$ git add .
+$ git commit -m 'init'
+$ git push origin master
+$ yarn start
+2. Add any 3rd libraries you know you are going to be using
+These will change, but some common ones, axios, react-router
 
-## Available Scripts
+$ yarn add axios
+$ yarn add react-router-dom@6
+BASIC REACT ROUTER SETUP
+make sure react-router-dom@6 is installed
+$ yarn add react-router-dom@6
+Setup BrowserRouter in update index.js
+import { BrowserRouter} from 'react-router-dom'
 
-In the project directory, you can run:
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById('root')
+);
+Create your pages(components)
+const Users = ()=>{
+    return (
+        <div>
+            <h1>Users Page</h1>
+        </div>
+    )
+}
 
-### `yarn start`
+export default Users
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+const About = ()=>{
+    return (
+        <div>
+            <h1>About Page</h1>
+        </div>
+    )
+}
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+export default About
+basic App.js setup demo
+import logo from './logo.svg';
+import './App.css';
+import { Link, Outlet } from 'react-router-dom';
 
-### `yarn test`
+function App() {
+  return (
+    <div>
+      <h1>Users App</h1>
+      <nav
+        style={{
+          border:'2px solid green'
+        }}
+        >
+          <Link to='/users'>Users</Link> - {' '}
+          <Link to='/about'>About</Link>
+        </nav>
+        <Outlet />
+    </div>
+  );
+}
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+export default App;
+index.js
 
-### `yarn build`
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Users from "./pages/Users";
+import About from "./pages/About";
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ReactDOM.render(
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />}>
+        <Route path="/users" element={<Users />} />
+        <Route path="/about" element={<About />} />
+      </Route>
+    </Routes>
+  </BrowserRouter>,
+  document.getElementById("root")
+);
+CONTEXT BASICS
+create a provider
+export const DataContext = React.createContext()
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+const DataProvider = (props)=>{
+    const [users, setUsers] = useState([])
+    const [demoState, setDemoState] = useState('hi I am demoState from the data provider ')
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+    // create an object that will be 'global state'
+    const dataProviderState = {users:users, demoState:demoState, x:1}
+    // return the provider which will wrap my all app
+    return (
+        <DataContext.Provider value={dataProviderState}>
+           {props.children}
+        </DataContext.Provider>
+    )
+}
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+export default DataProvider
+wrap our app in created provide
+ReactDOM.render(
+  <DataProvider>
+    <BrowserRouter>
+      ... WHAT EVER APP HERE
+    </BrowserRouter>
+  </DataProvider>,
+  document.getElementById("root")
+);
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. use it (useContext hook along with context from our provider) 
+example
+```javascript
+import { useContext } from "react"
+import { DataContext } from "../providers/DataProvider"
+const About = ()=>{
+    const {demoState, setDemoState} = useContext(DataContext)
+    return (
+        <div>
+            <h1>About Page</h1>
+            <button onClick={()=>setDemoState('changed in about')}>change</button>
+            <p>demoState: {demoState}</p>
+        </div>
+    )
+}
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+export default About
+CRUD
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+create the state in your provider
+do the CRUD in your provider (this is incomplete but gets us close)
+UI STUFF - forms, click events, render things to look nice
