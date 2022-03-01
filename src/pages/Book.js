@@ -1,6 +1,8 @@
 import { useEffect } from "react"
 import { useParams, useLocation } from "react-router-dom"
 import NewBook from "./NewBook"
+import "./BooksStyle.css"
+
 
 const Book = (props)=>{
     let params = useParams()
@@ -8,7 +10,7 @@ const Book = (props)=>{
     console.log(props)
     return (
         <div>
-            <h1>Book Page</h1>
+        
             <h1>{props.title}</h1>
             <h1>Author:{props.author}</h1>
             <button onClick={()=>{props.deleteBook(props.id)}}>Delete</button>
