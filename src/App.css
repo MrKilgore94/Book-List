@@ -1,4 +1,9 @@
-.App {
+body {
+  background-color: cadetblue;
+};
+
+
+#App {
   text-align: center;
 }
 
@@ -35,4 +40,33 @@
   to {
     transform: rotate(360deg);
   }
+}
+h1 {
+  align-items: center;
+  text-align: center;
+}
+
+button {
+  border-radius: 10px;
+  background-color: green;
+  color: white;
+};
+
+#title {
+  font-size: 4em;
+color: blue;
+};
+
+#author {
+color: blue;
+  
+};
+
+#NewBookBox {
+  border: solid green;
+  margin: 40px;
+  padding: 20px;
+  border-width: 4px;
+  background-color: rgb(88, 136, 88);
+  border-radius: 50px;
 }

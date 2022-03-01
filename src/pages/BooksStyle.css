@@ -1,0 +1,21 @@
+
+#header {
+  text-align: center;
+  color: blue
+};
+
+button {
+  border-radius: 10px;
+  background-color: green;
+  color: white;
+};
+
+#title {
+  font-size: 4em;
+color: blue;
+};
+
+#author {
+color: blue;
+  
+}

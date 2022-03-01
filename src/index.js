@@ -4,18 +4,30 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Users from "./pages/Users";
+import Books from "./pages/Books";
 import About from "./pages/About";
+import DataProvider from "./providers/DataProvider";
+import NewBook  from "./pages/NewBook";
+import Book from "./pages/Book";
+
+const NotFound = ()=>{
+  return <p>path not found</p>
+}
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />}>
-        <Route path="/users" element={<Users />} />
-        <Route path="/about" element={<About />} />
-      </Route>
-    </Routes>
-  </BrowserRouter>,
+  <DataProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route path="/Books" element={<Books />} />
+          <Route path="/Book/:id" element={<Book />} />
+          <Route path="/newBook" element={<NewBook />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </DataProvider>,
   document.getElementById("root")
 );
 

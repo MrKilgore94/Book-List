@@ -1,22 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
 import { Link, Outlet } from 'react-router-dom';
+import Books from "./pages/Books"
 
 function App() {
   return (
-    <div>
-      <h1>Users App</h1>
+    <div id="app">
+      <h1>Book List</h1>
       <nav
         style={{
-          border:'2px solid green'
+          border:'3px solid crimson'
         }}
         >
-          <Link to='/users'>Users</Link> - {' '}
-          <Link to='/about'>About</Link>
+          <Link to='/Books'>Books</Link> - {' '}
+          <Link to='/about'>About</Link> - {' '}
+          <Link to='/NewBook'>New Book</Link>
         </nav>
         <Outlet />
     </div>
   );
 }
+
 
 export default App;
